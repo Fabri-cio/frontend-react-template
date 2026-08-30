@@ -22,6 +22,12 @@ export const navigationItems: NavigationItem[] = [
     icon: <Info className="h-5 w-5" />,
   },
   {
+    id: "componentes",
+    label: "Componentes",
+    href: "/componentes",
+    icon: <Info className="h-5 w-5" />,
+  },
+  {
     id: "settings",
     label: "Configuración",
     href: "/settings",

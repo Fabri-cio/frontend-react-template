@@ -21,7 +21,11 @@ function Select({
     "disabled:cursor-not-allowed",
     "disabled:opacity-50",
     error
-      ? "border-destructive focus:border-destructive focus:ring-destructive/20"
+      ? [
+          "border-destructive",
+          "focus:border-destructive",
+          "focus:ring-destructive/20",
+        ].join(" ")
       : "",
     className,
   ]
@@ -29,7 +33,7 @@ function Select({
     .join(" ");
 
   return (
-    <select className={classes} {...props}>
+    <select className={classes} aria-invalid={error || undefined} {...props}>
       {children}
     </select>
   );

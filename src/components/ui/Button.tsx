@@ -2,7 +2,12 @@ import type { ButtonHTMLAttributes } from "react";
 
 import Spinner from "./Spinner";
 
-type ButtonVariant = "primary" | "secondary" | "destructive" | "ghost";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "destructive"
+  | "ghost"
+  | "outline";
 
 type ButtonSize = "sm" | "md" | "lg";
 
@@ -15,9 +20,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: "bg-primary text-primary-foreground hover:opacity-90",
+
   secondary: "bg-secondary text-secondary-foreground hover:opacity-80",
+
   destructive: "bg-destructive text-destructive-foreground hover:opacity-90",
+
   ghost: "bg-transparent text-foreground hover:bg-secondary",
+
+  outline: "border bg-background text-foreground hover:bg-secondary",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -32,14 +42,14 @@ function Button({
   fullWidth = false,
   loading = false,
   disabled,
+  type = "button",
   className = "",
   children,
   ...props
 }: ButtonProps) {
   const classes = [
     "inline-flex items-center justify-center gap-2",
-    "rounded-md",
-    "font-medium",
+    "rounded-md font-medium",
     "transition-opacity",
     "focus-visible:outline-none",
     "focus-visible:ring-2",
@@ -56,12 +66,13 @@ function Button({
 
   return (
     <button
+      type={type}
       className={classes}
       disabled={disabled || loading}
-      aria-busy={loading}
+      aria-busy={loading || undefined}
       {...props}
     >
-      {loading ? <Spinner size="sm" /> : null}
+      {loading && <Spinner size="sm" aria-label="Cargando" />}
 
       {children}
     </button>

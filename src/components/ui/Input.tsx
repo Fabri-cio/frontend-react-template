@@ -4,11 +4,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
 }
 
-function Input({
-  error = false,
-  className = "",
-  ...props
-}: InputProps) {
+function Input({ error = false, className = "", ...props }: InputProps) {
   const classes = [
     "h-10 w-full rounded-md border bg-background px-3",
     "text-sm text-foreground",
@@ -20,15 +16,22 @@ function Input({
     "focus:ring-primary/20",
     "disabled:cursor-not-allowed",
     "disabled:opacity-50",
+    "read-only:bg-muted",
     error
-      ? "border-destructive focus:border-destructive focus:ring-destructive/20"
+      ? [
+          "border-destructive",
+          "focus:border-destructive",
+          "focus:ring-destructive/20",
+        ].join(" ")
       : "",
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
-  return <input className={classes} {...props} />;
+  return (
+    <input className={classes} aria-invalid={error || undefined} {...props} />
+  );
 }
 
 export default Input;

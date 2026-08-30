@@ -16,15 +16,26 @@ function Textarea({ error = false, className = "", ...props }: TextareaProps) {
     "focus:ring-primary/20",
     "disabled:cursor-not-allowed",
     "disabled:opacity-50",
+    "read-only:bg-muted",
     error
-      ? "border-destructive focus:border-destructive focus:ring-destructive/20"
+      ? [
+          "border-destructive",
+          "focus:border-destructive",
+          "focus:ring-destructive/20",
+        ].join(" ")
       : "",
     className,
   ]
     .filter(Boolean)
     .join(" ");
 
-  return <textarea className={classes} {...props} />;
+  return (
+    <textarea
+      className={classes}
+      aria-invalid={error || undefined}
+      {...props}
+    />
+  );
 }
 
 export default Textarea;
